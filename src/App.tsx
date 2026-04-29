@@ -678,7 +678,7 @@ function App() {
                   onChange={(v) => setCard1(v)}
                 />
                 <Checkbox
-                  layout="border-right"
+                  layout="border-left"
                   label="Self-attested"
                   secondaryText="Project owner provides documentation only"
                   checked={card1 === true ? false : true}
@@ -717,7 +717,7 @@ function App() {
                   onChange={() => setPlan('monthly')}
                 />
                 <Radio
-                  layout="border-right"
+                  layout="border-left"
                   name="verify"
                   value="full"
                   label="Full audit"
@@ -793,7 +793,7 @@ function App() {
                     title="Verification"
                     description="Reviewer level required for this submission."
                   >
-                    <FormFieldset legend="Verification level" required>
+                    <FormFieldset legend="Verification level" required inline>
                       <Radio
                         layout="border-left"
                         name="form-verify"
@@ -804,7 +804,7 @@ function App() {
                         onChange={() => setFormVerification('basic')}
                       />
                       <Radio
-                        layout="border-right"
+                        layout="border-left"
                         name="form-verify"
                         value="full"
                         label="Full audit"

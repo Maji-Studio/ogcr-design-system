@@ -17,10 +17,9 @@
 /* --- Section --------------------------------------------------- */
 
 .ogcr-form__section {
-  display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  column-gap: var(--space-l);
-  row-gap: var(--space-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
   padding-block: var(--space-xl);
   border-top: 1px solid var(--border-light);
 }
@@ -34,7 +33,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2xs);
-  align-self: start;
+  margin-bottom: var(--space-xs);
 }
 
 .ogcr-form__section-step {
@@ -43,7 +42,6 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--interaction-primary-default);
-  margin-bottom: var(--space-2xs);
 }
 
 .ogcr-form__section-title {
@@ -58,6 +56,7 @@
 
 .ogcr-form__section-description {
   margin: 0;
+  max-width: 60ch;
   font-family: var(--font-family-default);
   font-weight: 400;
   font-size: var(--font-size-xs);
@@ -72,14 +71,7 @@
   min-width: 0;
 }
 
-@media (max-width: 720px) {
-  .ogcr-form__section {
-    grid-template-columns: 1fr;
-    padding-block: var(--space-l);
-  }
-}
-
-/* --- Row (paired fields) -------------------------------------- */
+/* --- Row (paired fields, side by side) ------------------------ */
 
 .ogcr-form__row {
   display: grid;
@@ -154,6 +146,25 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+}
+
+.ogcr-form__fieldset--inline .ogcr-form__fieldset-body {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--space-s);
+}
+
+.ogcr-form__fieldset--inline .ogcr-form__fieldset-body > * {
+  width: 100%;
+  max-width: none;
+}
+
+@media (max-width: 520px) {
+  .ogcr-form__fieldset--inline .ogcr-form__fieldset-body {
+    grid-auto-flow: row;
+    grid-auto-columns: minmax(0, 1fr);
+  }
 }
 
 .ogcr-form__fieldset--error .ogcr-form__helper {

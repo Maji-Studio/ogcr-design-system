@@ -675,8 +675,8 @@ Behavior:
 ```css
 .ogcr-menu {
   width: 320px;
-  background: var(--surface-page);
-  border: 1px solid var(--border-medium);
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-l);
   padding: var(--space-m);
   box-shadow: var(--elevation-l);
@@ -1041,6 +1041,311 @@ Behavior:
 - `aria-current="page"` on the active button.
 - Mobile icon plate is 48×48 to satisfy 40×40 minimum hit target with margin.
 
+### 4.13 Form
+
+Composition layer over Input, Checkbox, Radio, and Button. Layout-only — no surface chrome — so a Form sits cleanly inside a Card, Sidesheet, or page section. Library-agnostic: `errorText` / `helperText` are passed as props, so it works with native React state or react-hook-form's `Controller` / `register`.
+
+Pieces: `Form` (`<form>` wrapper), `FormSection` (step + title + description + body), `FormRow` (2-column field pair), `FormField` (label + helper/error wrapper for arbitrary controls), `FormFieldset` (legend-grouped controls, e.g. radio groups), `FormFooter` (action row with optional note).
+
+```html
+<form class="ogcr-form" novalidate>
+  <section class="ogcr-form__section">
+    <header class="ogcr-form__section-head">
+      <span class="ogcr-form__section-step">I</span>
+      <h3 class="ogcr-form__section-title">Project</h3>
+      <p class="ogcr-form__section-description">Identify the project being submitted.</p>
+    </header>
+    <div class="ogcr-form__section-body">
+      <div class="ogcr-form__row">
+        <!-- ogcr-input -->
+        <!-- ogcr-input -->
+      </div>
+      <!-- ogcr-input full width -->
+    </div>
+  </section>
+
+  <section class="ogcr-form__section">
+    <header class="ogcr-form__section-head">
+      <span class="ogcr-form__section-step">II</span>
+      <h3 class="ogcr-form__section-title">Verification</h3>
+    </header>
+    <div class="ogcr-form__section-body">
+      <fieldset class="ogcr-form__fieldset">
+        <legend class="ogcr-form__legend">
+          Verification level<span class="ogcr-form__required" aria-hidden="true">*</span>
+        </legend>
+        <div class="ogcr-form__fieldset-body">
+          <!-- ogcr-radio (border-left) -->
+          <!-- ogcr-radio (border-left) -->
+        </div>
+      </fieldset>
+    </div>
+  </section>
+
+  <footer class="ogcr-form__footer">
+    <p class="ogcr-form__footer-note">Required fields are marked *</p>
+    <div class="ogcr-form__footer-actions">
+      <!-- text · outlined · filled buttons -->
+    </div>
+  </footer>
+</form>
+```
+
+```css
+.ogcr-form { display: flex; flex-direction: column; width: 100%; margin: 0; padding: 0; }
+
+.ogcr-form__section {
+  display: flex; flex-direction: column; gap: var(--space-m);
+  padding-block: var(--space-xl);
+  border-top: 1px solid var(--border-light);
+}
+.ogcr-form__section:first-of-type { border-top: none; padding-top: 0; }
+
+.ogcr-form__section-head {
+  display: flex; flex-direction: column; gap: var(--space-2xs);
+  margin-bottom: var(--space-xs);
+}
+.ogcr-form__section-step {
+  font-family: var(--font-family-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--interaction-primary-default);
+}
+.ogcr-form__section-title {
+  margin: 0;
+  font-family: var(--font-family-default); font-weight: 500;
+  font-size: var(--font-size-m); line-height: 1.2; letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.ogcr-form__section-description {
+  margin: 0; max-width: 60ch;
+  font-family: var(--font-family-default); font-weight: 400;
+  font-size: var(--font-size-xs); line-height: 1.45;
+  color: var(--text-secondary);
+}
+.ogcr-form__section-body { display: flex; flex-direction: column; gap: var(--space-m); min-width: 0; }
+
+.ogcr-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-m);
+}
+@media (max-width: 520px) { .ogcr-form__row { grid-template-columns: 1fr; } }
+
+.ogcr-form__field { display: flex; flex-direction: column; gap: var(--space-2xs); min-width: 0; }
+.ogcr-form__label {
+  font-family: var(--font-family-default); font-weight: 400;
+  font-size: var(--font-size-xs); line-height: 1.4;
+  color: var(--text-secondary);
+}
+.ogcr-form__required { color: var(--text-negative); margin-left: 4px; font-weight: 500; }
+.ogcr-form__helper {
+  margin: 0;
+  font-family: var(--font-family-default); font-weight: 400;
+  font-size: var(--font-size-xs); line-height: 1.4;
+  color: var(--text-secondary);
+}
+.ogcr-form__field--error .ogcr-form__helper { color: var(--text-negative); }
+
+.ogcr-form__fieldset {
+  border: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-xs); min-width: 0;
+}
+.ogcr-form__legend {
+  padding: 0;
+  font-family: var(--font-family-default); font-weight: 400;
+  font-size: var(--font-size-xs); line-height: 1.4;
+  color: var(--text-secondary);
+}
+.ogcr-form__fieldset-body { display: flex; flex-direction: column; gap: var(--space-xs); }
+.ogcr-form__fieldset--inline .ogcr-form__fieldset-body {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--space-s);
+}
+.ogcr-form__fieldset--inline .ogcr-form__fieldset-body > * { width: 100%; max-width: none; }
+@media (max-width: 520px) {
+  .ogcr-form__fieldset--inline .ogcr-form__fieldset-body {
+    grid-auto-flow: row;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+}
+.ogcr-form__fieldset--error .ogcr-form__helper { color: var(--text-negative); }
+
+.ogcr-form__footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-m);
+  padding-top: var(--space-l); margin-top: var(--space-xs);
+  border-top: 1px solid var(--border-light);
+}
+.ogcr-form__footer-note {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.ogcr-form__footer-actions {
+  display: flex; align-items: center; gap: var(--space-xs);
+  flex-wrap: wrap; justify-content: flex-end;
+}
+@media (max-width: 520px) {
+  .ogcr-form__footer { flex-direction: column; align-items: stretch; }
+  .ogcr-form__footer-actions { justify-content: stretch; }
+}
+```
+
+Behavior:
+- Sections stack vertically with a `--border-light` divider above each one (skipped on the first).
+- Section head is title-led: small mono step kicker, then title, then description. All left-aligned at the top of the section body.
+- `FormRow` opt-in: pairs two fields side-by-side on a 2-col grid; collapses to 1-col under 520px.
+- `FormFieldset` defaults to a vertical body; add `ogcr-form__fieldset--inline` (or pass `inline` to the React component) to lay options out horizontally — useful for short radio/checkbox card pairs. Stacks under 520px.
+- Field-level error: pass `errorText`; the wrapper sets `ogcr-form__field--error` and the helper turns `--text-negative`. Primitives like Input expose their own `error` boolean — the Form wrappers don't override it, they coexist.
+- Required indicator: the `*` is `aria-hidden`; pair with `required` on the underlying input for assistive tech.
+- Footer: left-side mono note (e.g. "Required fields are marked *"), right-side action stack. Stacks on narrow widths.
+
+### 4.14 DataTable
+
+Sortable, accessible table built on [`@tanstack/react-table`](https://tanstack.com/table) v8. Visual treatment matches the kv-row pattern: dashed row rules, mono-caps headers, tabular-nums on numeric cells, Pill-rendered status cells.
+
+The component is the only one in this library that takes a runtime dependency. The headless engine handles sorting, row models, and column meta; the DOM and CSS below are this design system.
+
+```html
+<div class="ogcr-table">
+  <div class="ogcr-table__scroll" role="region" aria-label="Issuance ledger">
+    <table class="ogcr-table__table">
+      <caption class="ogcr-table__caption">Issuance ledger · last 30 days</caption>
+      <thead class="ogcr-table__thead">
+        <tr>
+          <th scope="col" class="ogcr-table__th" data-align="left" aria-sort="none">
+            <button type="button" class="ogcr-table__sort ogcr-table__sort--none">
+              <span>Project</span>
+              <span class="ogcr-table__sort-icon" aria-hidden="true">↕</span>
+            </button>
+          </th>
+          <th scope="col" class="ogcr-table__th" data-align="right" aria-sort="descending">
+            <button type="button" class="ogcr-table__sort ogcr-table__sort--desc">
+              <span>Credits (t CO₂e)</span>
+              <span class="ogcr-table__sort-icon" aria-hidden="true">↓</span>
+            </button>
+          </th>
+          <th scope="col" class="ogcr-table__th" data-align="left">Status</th>
+        </tr>
+      </thead>
+      <tbody class="ogcr-table__tbody">
+        <tr class="ogcr-table__tr">
+          <td class="ogcr-table__td" data-align="left">Iberian rewilding</td>
+          <td class="ogcr-table__td" data-align="right" data-numeric>42,180</td>
+          <td class="ogcr-table__td" data-align="left">
+            <span class="ogcr-pill ogcr-pill--warning">In review</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+```css
+.ogcr-table {
+  width: 100%;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-l);
+  background: var(--surface-light);
+  overflow: hidden;
+}
+.ogcr-table__scroll { width: 100%; overflow-x: auto; }
+.ogcr-table__table { width: 100%; border-collapse: collapse; font-family: var(--font-family-default); }
+.ogcr-table__caption {
+  caption-side: top;
+  padding: var(--space-s) var(--space-m); text-align: left;
+  font-family: var(--font-family-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-secondary);
+  background: var(--surface-neutral);
+  border-bottom: 1px solid var(--border-light);
+}
+.ogcr-table__thead {
+  background: linear-gradient(to bottom, var(--surface-neutral), var(--surface-light));
+}
+.ogcr-table__th {
+  padding: var(--space-s) var(--space-m);
+  text-align: left;
+  border-bottom: 1px solid var(--border-medium);
+  font-family: var(--font-family-mono);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-secondary);
+  white-space: nowrap; vertical-align: middle;
+}
+.ogcr-table__th[data-align="right"] { text-align: right; }
+.ogcr-table__th[data-align="center"] { text-align: center; }
+
+.ogcr-table__sort {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0; margin: 0; border: 0; background: transparent;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+  cursor: pointer; transition: color var(--motion-fast);
+}
+.ogcr-table__sort:hover { color: var(--text-primary); }
+.ogcr-table__sort:focus-visible {
+  outline: 2px solid var(--interaction-primary-default);
+  outline-offset: 3px; border-radius: 2px;
+}
+.ogcr-table__sort-icon {
+  display: inline-block; min-width: 10px;
+  font-family: var(--font-family-mono); font-size: 12px; line-height: 1;
+  opacity: 0.4; transition: opacity var(--motion-fast), color var(--motion-fast);
+}
+.ogcr-table__sort--asc .ogcr-table__sort-icon,
+.ogcr-table__sort--desc .ogcr-table__sort-icon {
+  opacity: 1; color: var(--interaction-primary-default);
+}
+.ogcr-table__th[data-align="right"] .ogcr-table__sort { flex-direction: row-reverse; }
+
+.ogcr-table__tr { transition: background-color var(--motion-fast); }
+.ogcr-table__tr:hover { background: var(--surface-neutral); }
+
+.ogcr-table__td {
+  padding: var(--space-s) var(--space-m);
+  border-bottom: 1px dashed var(--border-light);
+  font-size: var(--font-size-s); font-weight: 400;
+  color: var(--text-primary); vertical-align: middle; white-space: nowrap;
+}
+.ogcr-table__tbody tr:last-child .ogcr-table__td { border-bottom: none; }
+.ogcr-table__td[data-align="right"] { text-align: right; }
+.ogcr-table__td[data-align="center"] { text-align: center; }
+.ogcr-table__td[data-numeric] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.005em; font-weight: 500;
+}
+.ogcr-table__empty {
+  padding: var(--space-xl) var(--space-m); text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+```
+
+Column-meta extension (TypeScript module augmentation on `@tanstack/react-table`):
+
+```ts
+declare module '@tanstack/react-table' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    align?: 'left' | 'right' | 'center'
+    numeric?: boolean
+  }
+}
+```
+
+`align` controls header + cell text alignment (`data-align` attribute); `numeric` shorthand right-aligns + applies tabular-nums styling on cells.
+
+Behavior:
+- Sort: `aria-sort` reflects `none` / `ascending` / `descending`. Click toggles asc → desc → cleared. Sort button is the only focusable thing in the header cell.
+- Hover row: `--surface-neutral` background tint. Last row drops the dashed border so it doesn't double up with the table's own border.
+- Empty state: single full-span cell with mono-caps copy ("No records" by default).
+- Responsive: header row never wraps (`white-space: nowrap`); the wrapper `.ogcr-table__scroll` provides horizontal overflow on narrow viewports.
+
 ---
 
 ## 5. Iconography
@@ -1192,9 +1497,6 @@ Five primitives in Figma: `Area Chart Interactive`, `Area Chart`, `Bar Chart`, `
 
 ### 7.4 Map
 Reference implementation only. Recommendation in Figma: prefer open-source / MapBox. Wrap behind an app-side `Map` component to avoid vendor lock-in.
-
-### 7.5 Table
-No spec yet. Comply with: `--space-*` scale, typography utilities, `--border-light` hairlines. Define columns/rows with the same token vocabulary as Card.
 
 ---
 

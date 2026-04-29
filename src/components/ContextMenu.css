@@ -1,10 +1,10 @@
 /* OGCR Context Menu — Figma node 6063:1658
- * 320px wide, surface/page background, elevation/l shadow. */
+ * 320px wide, surface-light background, elevation/l shadow. */
 
 .ogcr-menu {
   width: 320px;
-  background: var(--surface-page);
-  border: 1px solid var(--border-medium);
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-l);
   padding: var(--space-m);
   box-shadow: var(--elevation-l);

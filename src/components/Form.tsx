@@ -106,6 +106,7 @@ export type FormFieldsetProps = {
   helperText?: string
   errorText?: string
   required?: boolean
+  inline?: boolean
   children: ReactNode
   className?: string
 }
@@ -115,6 +116,7 @@ export function FormFieldset({
   helperText,
   errorText,
   required,
+  inline = false,
   children,
   className,
 }: FormFieldsetProps) {
@@ -123,6 +125,7 @@ export function FormFieldset({
   const error = Boolean(errorText)
   const classes = [
     'ogcr-form__fieldset',
+    inline && 'ogcr-form__fieldset--inline',
     error && 'ogcr-form__fieldset--error',
     className,
   ]
