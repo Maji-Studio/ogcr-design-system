@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:lib": "echo 'build:lib will be wired in Phase 3 (vite.lib.config.ts)' && exit 0",
+    "build:lib": "vite build --config vite.lib.config.ts && rm -f dist/styles.js dist/styles.js.map",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
