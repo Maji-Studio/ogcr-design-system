@@ -828,7 +828,12 @@ function App() {
       <header className="page__hero reveal">
         <div className="page__hero-top">
           <Logo width={129} className="page__hero-logo" />
-          <span className="page__kicker">Design System · v0.1 · 2026</span>
+          <div className="page__hero-actions">
+            <span className="page__kicker">Design System · v0.1 · 2026</span>
+            <a className="page__storybook-link" href="/storybook/">
+              Storybook ↗
+            </a>
+          </div>
         </div>
         <h1 className="page__title">
           Design <span className="page__title-accent">system</span>
