@@ -13,7 +13,7 @@ const meta = {
   title: 'Components/Select',
   component: Select,
   parameters: { layout: 'padded' },
-  args: { options, placeholder: 'Select a status' },
+  args: { options, placeholder: 'Select a status', 'aria-label': 'Status' },
   decorators: [(Story) => <div className="w-[280px]"><Story /></div>],
 } satisfies Meta<typeof Select>
 

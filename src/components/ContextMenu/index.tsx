@@ -59,7 +59,11 @@ export function ContextMenu({
             )}
           >
             {(header || status) && (
+              // role="presentation" keeps this title/status chrome out of the
+              // menu's required-children set (role="menu" may only contain
+              // menuitem/group/separator); the items below are the menu content.
               <header
+                role="presentation"
                 data-slot="context-menu-header"
                 className="flex items-center justify-between gap-12"
               >

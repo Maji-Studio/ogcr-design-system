@@ -28,6 +28,11 @@ export type SelectProps = {
   side?: SelectSide
   align?: SelectAlign
   sideOffset?: number
+  /** Accessible name for the trigger. Required unless an associated <label>/
+   *  `aria-labelledby` names it — `role="combobox"` takes its name from a label,
+   *  not from the selected value/placeholder text. */
+  'aria-label'?: string
+  'aria-labelledby'?: string
   'aria-describedby'?: string
   'aria-invalid'?: boolean | 'true' | 'false'
 }
@@ -47,6 +52,8 @@ export function Select({
   side = 'bottom',
   align = 'start',
   sideOffset = 8,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   'aria-describedby': ariaDescribedby,
   'aria-invalid': ariaInvalid,
 }: SelectProps) {
@@ -62,6 +69,8 @@ export function Select({
     >
       <BaseSelect.Trigger
         id={id}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby}
         aria-invalid={ariaInvalid ?? (error || undefined)}
         aria-describedby={ariaDescribedby}
         data-slot="select-trigger"

@@ -19,9 +19,9 @@ const dirname =
 //   - styles.css   Tailwind v4 utilities + reset + design tokens (the ./styles.css export)
 //
 // React, react-dom, Base UI and TanStack Table are peerDependencies; cva/clsx/tailwind-merge
-// are runtime dependencies. All are externalized so the consumer's bundler dedupes a single
-// copy rather than inlining ours. The app/dev/test build lives in vite.config.ts and is
-// untouched by this config.
+// and @phosphor-icons/react are runtime dependencies. All are externalized so the consumer's
+// bundler dedupes a single copy (and tree-shakes the icon set) rather than inlining ours. The
+// app/dev/test build lives in vite.config.ts and is untouched by this config.
 export default defineConfig({
   plugins: [
     tailwindcss(),
@@ -65,6 +65,7 @@ export default defineConfig({
         /^react-dom($|\/)/,
         /^@base-ui\/react($|\/)/,
         /^@tanstack\/react-table($|\/)/,
+        /^@phosphor-icons\/react($|\/)/,
         'class-variance-authority',
         'clsx',
         'tailwind-merge',

@@ -22,6 +22,26 @@ import {
 } from './components/Form'
 import { DataTable } from './components/Table'
 import type { ColumnDef } from '@tanstack/react-table'
+import { Avatar } from './components/Avatar'
+import { Select } from './components/Select'
+import { Combobox } from './components/Combobox'
+import { NumberField } from './components/NumberField'
+import { Slider } from './components/Slider'
+import { Toggle, ToggleGroup } from './components/Toggle'
+import { Switch } from './components/Switch'
+import { Tabs } from './components/Tabs'
+import { Accordion } from './components/Accordion'
+import { Collapsible } from './components/Collapsible'
+import { Breadcrumb } from './components/Breadcrumb'
+import { Pagination } from './components/Pagination'
+import { Separator } from './components/Separator'
+import { Popover } from './components/Popover'
+import { Dialog } from './components/Dialog'
+import { AlertDialog } from './components/AlertDialog'
+import { Skeleton } from './components/Skeleton'
+import { Textarea } from './components/Textarea'
+import { Tooltip } from './components/Tooltip'
+import { ToastProvider, useToast } from './components/Toast'
 import {
   ArrowRightIcon,
   BellIcon,
@@ -30,6 +50,7 @@ import {
   FlaskIcon,
   FolderIcon,
   GearIcon,
+  InfoIcon,
   LeafIcon,
   MailIcon,
   SearchIcon,
@@ -337,6 +358,266 @@ const SECTIONS: SectionMeta[] = [
       { dt: 'Cell meta', dd: 'numeric · align' },
     ],
   },
+  {
+    id: 'avatar',
+    num: '16',
+    kicker: 'Component',
+    title: 'Avatar',
+    lede: 'A person or entity marker. Renders an image when available and falls back to initials derived from the name — across five sizes and two shapes.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Sizes', dd: 'xs · s · m · l · xl' },
+      { dt: 'Shapes', dd: 'circle · square' },
+      { dt: 'Fallback', dd: 'initials from name' },
+    ],
+  },
+  {
+    id: 'select',
+    num: '17',
+    kicker: 'Component',
+    title: 'Select',
+    lede: 'A single-choice dropdown built on Base UI. The trigger mirrors the input field; the popup matches its width and checks the active option.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Trigger', dd: '48px · matches Input' },
+      { dt: 'States', dd: 'default · open · error · disabled' },
+      { dt: 'Naming', dd: 'aria-label / labelledby' },
+    ],
+  },
+  {
+    id: 'combobox',
+    num: '18',
+    kicker: 'Component',
+    title: 'Combobox',
+    lede: 'Type-ahead autocomplete over a list of options. Filters as you type and surfaces an empty-state message when nothing matches.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Engine', dd: 'Base UI Autocomplete' },
+      { dt: 'Empty state', dd: 'configurable message' },
+      { dt: 'Popup', dd: 'anchor-width · 320px max' },
+    ],
+  },
+  {
+    id: 'number-field',
+    num: '19',
+    kicker: 'Component',
+    title: 'Number field',
+    lede: 'A numeric input with decrement / increment steppers, min–max clamping, and Intl number formatting. Keyboard supports small and large steps.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Steppers', dd: '44px · ±step' },
+      { dt: 'Formatting', dd: 'Intl.NumberFormat' },
+      { dt: 'States', dd: 'default · error · disabled' },
+    ],
+  },
+  {
+    id: 'slider',
+    num: '20',
+    kicker: 'Component',
+    title: 'Slider',
+    lede: 'A single-value range control with a 6-pixel track, draggable thumb, and optional inline value read-out. Commits on pointer-up or keyboard.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Track', dd: '6px · border-medium' },
+      { dt: 'Thumb', dd: '20px · primary ring' },
+      { dt: 'Tones', dd: 'default · error' },
+    ],
+  },
+  {
+    id: 'toggle',
+    num: '21',
+    kicker: 'Component',
+    title: 'Toggle',
+    lede: 'A two-state pressable button, standalone or grouped into a segmented control. The group behaves as a single- or multi-select toolbar.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Sizes', dd: 's · m' },
+      { dt: 'Group', dd: 'single · multi-select' },
+      { dt: 'Role', dd: 'button · toolbar' },
+    ],
+  },
+  {
+    id: 'switch',
+    num: '22',
+    kicker: 'Component',
+    title: 'Switch',
+    lede: 'A binary on / off control with an optional inline label and secondary text. The thumb slides on a track that shifts to the primary tone when on.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Track', dd: '40 × 24px' },
+      { dt: 'States', dd: 'on · off · error · disabled' },
+      { dt: 'Label', dd: 'optional · inline' },
+    ],
+  },
+  {
+    id: 'tabs',
+    num: '23',
+    kicker: 'Module',
+    title: 'Tabs',
+    lede: 'Switch between sibling panels with a sliding active indicator. Horizontal or vertical, with optional per-tab icons.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Orientations', dd: 'horizontal · vertical' },
+      { dt: 'Indicator', dd: 'animated · 2px' },
+      { dt: 'Per tab', dd: 'icon · disabled' },
+    ],
+  },
+  {
+    id: 'accordion',
+    num: '24',
+    kicker: 'Module',
+    title: 'Accordion',
+    lede: 'A stack of headers that expand to reveal content. Single-open by default; opt into multiple. Panel height animates on toggle.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Mode', dd: 'single · multiple' },
+      { dt: 'Motion', dd: 'height · 200ms' },
+      { dt: 'Per item', dd: 'disabled' },
+    ],
+  },
+  {
+    id: 'collapsible',
+    num: '25',
+    kicker: 'Component',
+    title: 'Collapsible',
+    lede: 'A single trigger that shows or hides a region of content, with an animated height transition and an optional chevron affordance.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Motion', dd: 'height · 200ms' },
+      { dt: 'Chevron', dd: 'optional' },
+      { dt: 'State', dd: 'open · closed · disabled' },
+    ],
+  },
+  {
+    id: 'breadcrumb',
+    num: '26',
+    kicker: 'Component',
+    title: 'Breadcrumb',
+    lede: 'A hierarchical trail to the current page. Links and buttons are interactive; the final crumb is marked as the current location.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Separator', dd: 'chevron · custom' },
+      { dt: 'Current', dd: 'aria-current=page' },
+      { dt: 'Items', dd: 'link · button · text' },
+    ],
+  },
+  {
+    id: 'pagination',
+    num: '27',
+    kicker: 'Component',
+    title: 'Pagination',
+    lede: 'Page navigation with previous / next controls and a truncated page range that keeps the first, last, and current pages in view.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Range', dd: 'sibling-aware ellipses' },
+      { dt: 'Cell', dd: '40px · active fill' },
+      { dt: 'Controls', dd: 'prev · next' },
+    ],
+  },
+  {
+    id: 'separator',
+    num: '28',
+    kicker: 'Component',
+    title: 'Separator',
+    lede: 'A one-pixel divider for splitting content. Horizontal or vertical, with an optional centered label on the horizontal variant.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Orientations', dd: 'horizontal · vertical' },
+      { dt: 'Weight', dd: '1px · border-light' },
+      { dt: 'Label', dd: 'optional · centered' },
+    ],
+  },
+  {
+    id: 'popover',
+    num: '29',
+    kicker: 'Module',
+    title: 'Popover',
+    lede: 'A floating surface anchored to a trigger, with optional title, description, and pointer arrow. Non-modal by default.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Surface', dd: 'surface-light · elevation-l' },
+      { dt: 'Placement', dd: 'side · align · offset' },
+      { dt: 'Arrow', dd: 'optional' },
+    ],
+  },
+  {
+    id: 'dialog',
+    num: '30',
+    kicker: 'Module',
+    title: 'Dialog',
+    lede: 'A centered modal for focused tasks. Title, optional description, arbitrary body, and a footer of primary / secondary actions that close on click.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Sizes', dd: 's · m · l' },
+      { dt: 'Surface', dd: 'surface-light · elevation-l' },
+      { dt: 'Actions', dd: 'primary · secondary' },
+    ],
+  },
+  {
+    id: 'alert-dialog',
+    num: '31',
+    kicker: 'Module',
+    title: 'Alert dialog',
+    lede: 'A compact confirmation modal for consequential actions. Cancel and confirm are required; the danger tone renders a destructive confirm.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Width', dd: '400px' },
+      { dt: 'Tones', dd: 'default · danger' },
+      { dt: 'Dismiss', dd: 'requires a choice' },
+    ],
+  },
+  {
+    id: 'skeleton',
+    num: '32',
+    kicker: 'Component',
+    title: 'Skeleton',
+    lede: 'A pulsing placeholder for content that is still loading. Text, rectangular, and circular variants; text can render multiple lines.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Variants', dd: 'text · rectangular · circular' },
+      { dt: 'Motion', dd: 'animate-pulse' },
+      { dt: 'Text', dd: 'multi-line · shortened last' },
+    ],
+  },
+  {
+    id: 'textarea',
+    num: '33',
+    kicker: 'Component',
+    title: 'Textarea',
+    lede: 'A multi-line text control that mirrors the Input field. Label, helper text, and an error state that swaps the border and focus halo to negative. The resize affordance is configurable.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Resize', dd: 'none · vertical · horizontal · both' },
+      { dt: 'Min height', dd: '96px · rows 4' },
+      { dt: 'States', dd: 'default · error · disabled' },
+    ],
+  },
+  {
+    id: 'toast',
+    num: '34',
+    kicker: 'Module',
+    title: 'Toast',
+    lede: 'Transient notifications stacked at the viewport corner, fired imperatively. Five tones, an optional action, and auto-dismiss. Wrap the app once in `ToastProvider`, then call `useToast()` from anywhere below.',
+    figmaNode: '—',
+    spec: [
+      { dt: 'Tones', dd: 'neutral · success · error · warning · info' },
+      { dt: 'Viewport', dd: 'fixed bottom-right · 400px' },
+      { dt: 'API', dd: 'ToastProvider + useToast()' },
+    ],
+  },
+  {
+    id: 'tooltip',
+    num: '35',
+    kicker: 'Component',
+    title: 'Tooltip',
+    lede: 'A small label revealed on hover or focus, anchored to its trigger with an optional pointer arrow. Inverted surface, configurable open / close delays, and four placements. Supplemental only — never the sole label for a control.',
+    figmaNode: '3abda8 (set)',
+    spec: [
+      { dt: 'Surface', dd: 'surface-strong · inverted text' },
+      { dt: 'Placement', dd: 'side · align · offset' },
+      { dt: 'Delay', dd: 'open 200ms · close 0ms' },
+    ],
+  },
 ]
 
 const SECTION_BY_ID = Object.fromEntries(SECTIONS.map((s) => [s.id, s])) as Record<string, SectionMeta>
@@ -377,6 +658,63 @@ function SectionHead({ meta }: { meta: SectionMeta }) {
   )
 }
 
+function ToastDemo() {
+  const toast = useToast()
+  return (
+    <div className="button-row">
+      <Button
+        variant="filled"
+        onClick={() =>
+          toast.add({
+            type: 'success',
+            title: 'Project verified',
+            description: '42,180 t CO₂e is now eligible for issuance.',
+          })
+        }
+      >
+        Success
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={() =>
+          toast.add({
+            type: 'warning',
+            title: 'Sampling variance is high',
+            description: 'Plot 7 deviates from the regional baseline by 18%.',
+          })
+        }
+      >
+        Warning
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={() =>
+          toast.add({
+            type: 'error',
+            title: 'Audit failed',
+            description: 'Two findings require remediation before issuance.',
+            actionProps: { children: 'Open findings', onClick: () => {} },
+          })
+        }
+      >
+        Error + action
+      </Button>
+      <Button
+        variant="text"
+        onClick={() =>
+          toast.add({
+            type: 'info',
+            title: 'Methodology v3.2 published',
+            description: 'Existing projects keep v3.1 until their next reissuance window.',
+          })
+        }
+      >
+        Info
+      </Button>
+    </div>
+  )
+}
+
 function App() {
   const [email, setEmail] = useState('')
   const [search, setSearch] = useState('Iberian rewilding')
@@ -397,8 +735,16 @@ function App() {
   const [formVerification, setFormVerification] = useState('full')
   const [formTerms, setFormTerms] = useState<CheckboxValue>(false)
   const projectCodeError = !/^OGCR-/.test(formProjectCode)
+  const [registry, setRegistry] = useState<string | null>('verra')
+  const [methodology, setMethodology] = useState('Soil carbon v3.2')
+  const [plotCount, setPlotCount] = useState<number | null>(12)
+  const [variance, setVariance] = useState(18)
+  const [boldOn, setBoldOn] = useState(false)
+  const [notify, setNotify] = useState(true)
+  const [ledgerPage, setLedgerPage] = useState(3)
 
   return (
+    <ToastProvider>
     <main className="page">
       <header className="page__hero reveal">
         <div className="page__hero-top">
@@ -1155,6 +1501,473 @@ function App() {
             </div>
           </section>
 
+          <section id="avatar" className="section reveal">
+            <SectionHead meta={sec('avatar')} />
+            <div className="section__body">
+              <div className="button-row">
+                <Avatar size="xs" name="Camila Rojas" />
+                <Avatar size="s" name="Diego Marín" />
+                <Avatar size="m" name="Iberian Rewilding" />
+                <Avatar size="l" shape="square" name="Mossy Earth" />
+                <Avatar size="xl" src="https://i.pravatar.cc/96?img=12" name="Reviewer" />
+              </div>
+            </div>
+          </section>
+
+          <section id="select" className="section reveal">
+            <SectionHead meta={sec('select')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <Select
+                  aria-label="Registry"
+                  value={registry}
+                  onValueChange={setRegistry}
+                  options={[
+                    { value: 'verra', label: 'Verra (VCS)' },
+                    { value: 'gold', label: 'Gold Standard' },
+                    { value: 'puro', label: 'Puro.earth' },
+                    { value: 'isometric', label: 'Isometric' },
+                    { value: 'legacy', label: 'Legacy registry', disabled: true },
+                  ]}
+                />
+                <Select
+                  aria-label="Methodology"
+                  placeholder="Select methodology"
+                  options={[
+                    { value: 'soil', label: 'Soil carbon v3.2' },
+                    { value: 'forest', label: 'Afforestation v2.8' },
+                    { value: 'blue', label: 'Blue carbon v3.1' },
+                  ]}
+                />
+                <Select
+                  aria-label="Required registry"
+                  error
+                  placeholder="Selection required"
+                  options={[{ value: 'a', label: 'Option A' }]}
+                />
+                <Select
+                  aria-label="Disabled registry"
+                  disabled
+                  placeholder="Unavailable"
+                  options={[{ value: 'a', label: 'Option A' }]}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="combobox" className="section reveal">
+            <SectionHead meta={sec('combobox')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <Combobox
+                  value={methodology}
+                  onValueChange={setMethodology}
+                  placeholder="Search methodologies…"
+                  items={[
+                    'Soil carbon v3.2',
+                    'Afforestation v2.8',
+                    'Blue carbon v3.1',
+                    'Biochar v1.4',
+                    'Enhanced weathering v2.0',
+                    'Peatland restoration v3.0',
+                  ]}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="number-field" className="section reveal">
+            <SectionHead meta={sec('number-field')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <NumberField
+                  label="Plot count"
+                  value={plotCount}
+                  onValueChange={setPlotCount}
+                  min={0}
+                  max={99}
+                />
+                <NumberField
+                  label="Sampling radius (m)"
+                  defaultValue={25}
+                  step={5}
+                  min={0}
+                  helperText="Snaps to 5-metre increments."
+                />
+                <NumberField
+                  label="Estimated credits"
+                  defaultValue={42180}
+                  helperText="Tonnes CO₂e."
+                />
+                <NumberField label="Locked" defaultValue={12} disabled />
+              </div>
+            </div>
+          </section>
+
+          <section id="slider" className="section reveal">
+            <SectionHead meta={sec('slider')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <Slider
+                  label="Sampling variance"
+                  value={variance}
+                  onValueChange={setVariance}
+                  showValue
+                  max={100}
+                />
+                <Slider label="Confidence threshold" defaultValue={80} showValue />
+                <Slider label="Out of tolerance" defaultValue={64} showValue error />
+                <Slider label="Locked" defaultValue={40} disabled />
+              </div>
+            </div>
+          </section>
+
+          <section id="toggle" className="section reveal">
+            <SectionHead meta={sec('toggle')} />
+            <div className="section__body">
+              <div className="specimen-stack" style={{ gap: 16 }}>
+                <div className="button-row">
+                  <Toggle aria-label="Bold" pressed={boldOn} onPressedChange={setBoldOn}>
+                    Bold
+                  </Toggle>
+                  <Toggle aria-label="Grid view">
+                    <SquaresFourIcon />
+                  </Toggle>
+                  <Toggle aria-label="Disabled" disabled>
+                    Disabled
+                  </Toggle>
+                </div>
+                <ToggleGroup
+                  aria-label="View"
+                  defaultValue={['grid']}
+                  items={[
+                    { value: 'grid', label: 'Grid', icon: <SquaresFourIcon /> },
+                    { value: 'chart', label: 'Chart', icon: <ChartBarIcon /> },
+                    { value: 'files', label: 'Files', icon: <FolderIcon /> },
+                  ]}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="switch" className="section reveal">
+            <SectionHead meta={sec('switch')} />
+            <div className="section__body">
+              <div className="specimen-stack">
+                <Switch
+                  label="Email notifications"
+                  secondaryText="Sent when a review status changes"
+                  checked={notify}
+                  onCheckedChange={setNotify}
+                />
+                <Switch label="Auto-publish methodology updates" />
+                <Switch label="Locked on" checked disabled />
+                <Switch
+                  label="Requires attention"
+                  secondaryText="Toggle to acknowledge"
+                  error
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="tabs" className="section reveal">
+            <SectionHead meta={sec('tabs')} />
+            <div className="section__body">
+              <Tabs
+                defaultValue="overview"
+                items={[
+                  {
+                    value: 'overview',
+                    label: 'Overview',
+                    icon: <SquaresFourIcon />,
+                    content: (
+                      <p className="text-body-s card__paragraph">
+                        Project summary, current status, and key decision dates.
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'sampling',
+                    label: 'Sampling',
+                    icon: <FlaskIcon />,
+                    content: (
+                      <p className="text-body-s card__paragraph">
+                        Field measurements collected across 12 plots.
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'audit',
+                    label: 'Audit',
+                    icon: <ChartBarIcon />,
+                    content: (
+                      <p className="text-body-s card__paragraph">
+                        Reviewer findings and the remediation log.
+                      </p>
+                    ),
+                  },
+                  {
+                    value: 'archive',
+                    label: 'Archive',
+                    disabled: true,
+                    content: (
+                      <p className="text-body-s card__paragraph">Read-only historical records.</p>
+                    ),
+                  },
+                ]}
+              />
+            </div>
+          </section>
+
+          <section id="accordion" className="section reveal">
+            <SectionHead meta={sec('accordion')} />
+            <div className="section__body">
+              <div className="specimen-stack--narrow">
+                <Accordion
+                  defaultValue={['methodology']}
+                  items={[
+                    {
+                      value: 'methodology',
+                      title: 'What methodology applies?',
+                      content:
+                        'Soil carbon v3.2 governs sampling cadence, plot density, and the baseline model used for this issuance.',
+                    },
+                    {
+                      value: 'sampling',
+                      title: 'How is sampling verified?',
+                      content:
+                        'An OGCR analyst cross-checks field measurements against the regional baseline and flags variance above 15%.',
+                    },
+                    {
+                      value: 'timeline',
+                      title: 'What is the decision timeline?',
+                      content:
+                        'Most reviews resolve within 8 business days of a complete submission.',
+                    },
+                    {
+                      value: 'disabled',
+                      title: 'Unavailable section',
+                      content: 'Not yet published.',
+                      disabled: true,
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="collapsible" className="section reveal">
+            <SectionHead meta={sec('collapsible')} />
+            <div className="section__body">
+              <div className="specimen-stack--narrow">
+                <Collapsible trigger="Advanced sampling parameters" defaultOpen>
+                  <div className="kv-list">
+                    <div className="kv-row">
+                      <span className="kv-row__key">Plot density</span>
+                      <span className="kv-row__value">1 per 4 ha</span>
+                    </div>
+                    <div className="kv-row">
+                      <span className="kv-row__key">Core depth</span>
+                      <span className="kv-row__value">30 cm</span>
+                    </div>
+                    <div className="kv-row">
+                      <span className="kv-row__key">Replicates</span>
+                      <span className="kv-row__value">3 per plot</span>
+                    </div>
+                  </div>
+                </Collapsible>
+              </div>
+            </div>
+          </section>
+
+          <section id="breadcrumb" className="section reveal">
+            <SectionHead meta={sec('breadcrumb')} />
+            <div className="section__body">
+              <Breadcrumb
+                items={[
+                  { label: 'Projects', href: '#' },
+                  { label: 'Iberian rewilding', href: '#' },
+                  { label: 'Sampling', href: '#' },
+                  { label: 'Plot 7' },
+                ]}
+              />
+            </div>
+          </section>
+
+          <section id="pagination" className="section reveal">
+            <SectionHead meta={sec('pagination')} />
+            <div className="section__body">
+              <Pagination page={ledgerPage} pageCount={12} onPageChange={setLedgerPage} />
+            </div>
+          </section>
+
+          <section id="separator" className="section reveal">
+            <SectionHead meta={sec('separator')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <p className="text-body-s card__paragraph">Issuance summary</p>
+                <Separator />
+                <p className="text-body-s card__paragraph">Reviewer notes</p>
+                <Separator label="then" />
+                <div className="button-row" style={{ alignItems: 'center', height: 40 }}>
+                  <span className="text-body-s">Draft</span>
+                  <Separator orientation="vertical" />
+                  <span className="text-body-s">In review</span>
+                  <Separator orientation="vertical" />
+                  <span className="text-body-s">Issued</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="popover" className="section reveal">
+            <SectionHead meta={sec('popover')} />
+            <div className="section__body">
+              <div className="button-row">
+                <Popover
+                  trigger={
+                    <Button variant="outlined" iconLeft={<InfoIcon />}>
+                      What&apos;s this?
+                    </Button>
+                  }
+                  title="Methodology v3.2"
+                  description="Governs sampling cadence and the baseline model. Existing projects keep v3.1 until their next reissuance window."
+                />
+                <Popover
+                  showArrow
+                  trigger={<Button variant="text">With arrow</Button>}
+                  title="Heads up"
+                  description="This popover points back at its trigger."
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="dialog" className="section reveal">
+            <SectionHead meta={sec('dialog')} />
+            <div className="section__body">
+              <div className="button-row">
+                <Dialog
+                  trigger={<Button variant="filled">Open dialog</Button>}
+                  title="Submit for review"
+                  description="The reviewer will be notified once you submit."
+                  primaryAction={{ label: 'Submit' }}
+                  secondaryAction={{ label: 'Cancel' }}
+                >
+                  <p style={{ margin: 0 }}>
+                    Methodology v3.2 · 12 plots · 42,180 t CO₂e estimated. You can keep editing
+                    after submission until a reviewer is assigned.
+                  </p>
+                </Dialog>
+              </div>
+            </div>
+          </section>
+
+          <section id="alert-dialog" className="section reveal">
+            <SectionHead meta={sec('alert-dialog')} />
+            <div className="section__body">
+              <div className="button-row">
+                <AlertDialog
+                  trigger={<Button variant="outlined">Archive project</Button>}
+                  title="Archive this project?"
+                  description="It moves to the archive and stops accruing credits. You can restore it within 30 days."
+                  confirmLabel="Archive"
+                />
+                <AlertDialog
+                  tone="danger"
+                  trigger={<Button variant="outlined">Delete issuance</Button>}
+                  title="Delete this issuance?"
+                  description="This permanently removes the issuance record and its sampling data. This cannot be undone."
+                  confirmLabel="Delete"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="skeleton" className="section reveal">
+            <SectionHead meta={sec('skeleton')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <div className="button-row" style={{ alignItems: 'center' }}>
+                  <Skeleton variant="circular" width={48} height={48} />
+                  <div style={{ flex: 1 }}>
+                    <Skeleton variant="text" lines={2} />
+                  </div>
+                </div>
+                <Skeleton variant="rectangular" height={120} />
+                <Skeleton variant="text" width="40%" />
+              </div>
+            </div>
+          </section>
+
+          <section id="textarea" className="section reveal">
+            <SectionHead meta={sec('textarea')} />
+            <div className="section__body">
+              <div className="specimen-stack specimen-stack--narrow">
+                <Textarea
+                  label="Reviewer notes"
+                  placeholder="Summarise the variance findings…"
+                  defaultValue="Plot 7 deviates from the regional baseline by 18%. Recommend a second core sample before issuance."
+                  helperText="Shared with the project owner once submitted."
+                />
+                <Textarea
+                  label="Remediation summary"
+                  placeholder="Describe the corrective action…"
+                  rows={3}
+                  errorText="A remediation summary is required before review can resume."
+                />
+                <Textarea
+                  label="Locked note"
+                  defaultValue="Archived — read only."
+                  resize="none"
+                  disabled
+                />
+              </div>
+            </div>
+          </section>
+
+          <section id="toast" className="section reveal">
+            <SectionHead meta={sec('toast')} />
+            <div className="section__body">
+              <ToastDemo />
+            </div>
+          </section>
+
+          <section id="tooltip" className="section reveal">
+            <SectionHead meta={sec('tooltip')} />
+            <div className="section__body">
+              <div className="button-row">
+                <Tooltip
+                  trigger={
+                    <Button variant="outlined" iconLeft={<InfoIcon />}>
+                      Methodology
+                    </Button>
+                  }
+                >
+                  v3.2 governs sampling cadence and the baseline model.
+                </Tooltip>
+                <Tooltip
+                  side="right"
+                  trigger={
+                    <button type="button" className="nav-bell" aria-label="Notifications">
+                      <BellIcon />
+                    </button>
+                  }
+                >
+                  3 reviews awaiting your sign-off
+                </Tooltip>
+                <Tooltip
+                  side="bottom"
+                  showArrow={false}
+                  trigger={<Button variant="text">No arrow</Button>}
+                >
+                  A plain tooltip without the pointer.
+                </Tooltip>
+              </div>
+            </div>
+          </section>
+
           <footer className="colophon">
             <span>© OGCR · Operator platform</span>
             <span>Set in Inter</span>
@@ -1177,6 +1990,7 @@ function App() {
         </nav>
       </div>
     </main>
+    </ToastProvider>
   )
 }
 

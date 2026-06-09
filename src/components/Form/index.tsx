@@ -251,11 +251,11 @@ export function FormFooter({ note, children, className, ...rest }: FormFooterPro
       )}
     >
       {note && (
-        <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-text-secondary">
+        <p className="m-0 sm:order-last font-mono text-[11px] uppercase tracking-[0.08em] text-text-secondary">
           {note}
         </p>
       )}
-      <div className="flex items-center gap-8 flex-wrap justify-end">{children}</div>
+      <div className="flex items-center gap-8 flex-wrap justify-start">{children}</div>
     </footer>
   )
 }

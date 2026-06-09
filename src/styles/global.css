@@ -78,11 +78,11 @@ body {
   .text-h3 { font-size: var(--text-xl); }             /* 24 */
   .text-h4 { font-size: var(--text-l); }              /* 20 */
   .text-body { font-size: var(--text-l); }            /* 20 */
-  .text-body-s { font-size: var(--text-m); }          /* 18 */
+  .text-body-s { font-size: var(--text-m); }          /* 16 */
   .text-body-l { font-size: var(--text-xl); }         /* 24 */
   .text-lead { font-size: var(--text-xl); }           /* 24 */
   .text-quote { font-size: var(--text-2xl); }         /* 32 */
-  .text-label-button { font-size: var(--text-m); }    /* 18 */
-  .text-label-navigation { font-size: var(--text-m); }/* 18 */
+  .text-label-button { font-size: var(--text-m); }    /* 16 */
+  .text-label-navigation { font-size: var(--text-m); }/* 16 */
   /* .text-label-input intentionally not bumped — Figma keeps it at 14 across all breakpoints. */
 }

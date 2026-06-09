@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { Dialog } from '@base-ui/react/dialog'
+import { Avatar } from '../Avatar'
 import { LogoMark } from '../Logo'
 import { CaretDownIcon, DotsThreeIcon, PanelLeftIcon, XIcon } from '../icons'
 import { cn } from '../../lib/cn'
@@ -193,12 +194,7 @@ function UserChip({ user, onUserAction, collapsed }: UserChipProps) {
         collapsed && 'w-40 h-40 p-0 justify-center',
       )}
     >
-      <span
-        aria-hidden="true"
-        className="inline-flex items-center justify-center w-32 h-32 shrink-0 bg-surface-strong text-white rounded-full font-standard font-semibold text-[12px] tracking-[0.4px]"
-      >
-        {user.initials}
-      </span>
+      <Avatar aria-hidden name={user.name} initials={user.initials} size="m" />
       {!collapsed && (
         <>
           <span className="flex flex-col min-w-0 flex-1 gap-px">
