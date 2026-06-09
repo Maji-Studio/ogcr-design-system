@@ -113,12 +113,12 @@ export function Dialog({
             </div>
           )}
           {(primaryAction || secondaryAction) && (
-            <footer data-slot="dialog-footer" className="flex items-center justify-end gap-8">
-              {secondaryAction && (
-                <DialogActionButton action={secondaryAction} fallbackVariant="outlined" />
-              )}
+            <footer data-slot="dialog-footer" className="flex items-center justify-start gap-8">
               {primaryAction && (
                 <DialogActionButton action={primaryAction} fallbackVariant="filled" />
+              )}
+              {secondaryAction && (
+                <DialogActionButton action={secondaryAction} fallbackVariant="outlined" />
               )}
             </footer>
           )}

@@ -76,14 +76,7 @@ export function AlertDialog({
               {children}
             </div>
           )}
-          <footer data-slot="alert-dialog-footer" className="flex items-center justify-end gap-8">
-            <BaseAlertDialog.Close
-              render={
-                <Button variant="outlined" onClick={onCancel}>
-                  {cancelLabel}
-                </Button>
-              }
-            />
+          <footer data-slot="alert-dialog-footer" className="flex items-center justify-start gap-8">
             <BaseAlertDialog.Close
               render={
                 <Button
@@ -92,6 +85,13 @@ export function AlertDialog({
                   onClick={onConfirm}
                 >
                   {confirmLabel}
+                </Button>
+              }
+            />
+            <BaseAlertDialog.Close
+              render={
+                <Button variant="outlined" onClick={onCancel}>
+                  {cancelLabel}
                 </Button>
               }
             />

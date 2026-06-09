@@ -42,9 +42,9 @@ export const Floating: Story = {
     subtitle: 'Use your work account',
     floating: true,
     children: (
-      <div className="flex justify-end gap-8">
-        <Button variant="text">Forgot password?</Button>
+      <div className="flex justify-start gap-8">
         <Button variant="filled">Sign in</Button>
+        <Button variant="text">Forgot password?</Button>
       </div>
     ),
   },

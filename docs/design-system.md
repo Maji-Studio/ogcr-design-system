@@ -1083,10 +1083,10 @@ Pieces: `Form` (`<form>` wrapper), `FormSection` (step + title + description + b
   </section>
 
   <footer class="ogcr-form__footer">
-    <p class="ogcr-form__footer-note">Required fields are marked *</p>
     <div class="ogcr-form__footer-actions">
-      <!-- text · outlined · filled buttons -->
+      <!-- filled · outlined · text buttons (primary CTA first / leftmost) -->
     </div>
+    <p class="ogcr-form__footer-note">Required fields are marked *</p>
   </footer>
 </form>
 ```
@@ -1186,7 +1186,7 @@ Pieces: `Form` (`<form>` wrapper), `FormSection` (step + title + description + b
 }
 .ogcr-form__footer-actions {
   display: flex; align-items: center; gap: var(--space-xs);
-  flex-wrap: wrap; justify-content: flex-end;
+  flex-wrap: wrap; justify-content: flex-start; /* CTAs anchored bottom-left */
 }
 @media (max-width: 520px) {
   .ogcr-form__footer { flex-direction: column; align-items: stretch; }
@@ -1201,7 +1201,7 @@ Behavior:
 - `FormFieldset` defaults to a vertical body; add `ogcr-form__fieldset--inline` (or pass `inline` to the React component) to lay options out horizontally — useful for short radio/checkbox card pairs. Stacks under 520px.
 - Field-level error: pass `errorText`; the wrapper sets `ogcr-form__field--error` and the helper turns `--text-negative`. Primitives like Input expose their own `error` boolean — the Form wrappers don't override it, they coexist.
 - Required indicator: the `*` is `aria-hidden`; pair with `required` on the underlying input for assistive tech.
-- Footer: left-side mono note (e.g. "Required fields are marked *"), right-side action stack. Stacks on narrow widths.
+- Footer: left-side action stack (primary CTA first / leftmost), right-side mono note (e.g. "Required fields are marked *"). CTAs are anchored bottom-**left**, not bottom-right. Stacks on narrow widths.
 
 ### 4.14 DataTable
 
@@ -1505,7 +1505,7 @@ Centered modal for focused tasks. **Wraps:** Base UI `Dialog`.
 - **Props:** `title`, `trigger?: ReactElement`, `description?`, `primaryAction?`, `secondaryAction?`, `showClose?=true`, `size?='m'` (`s | m | l`), `open?`, `defaultOpen?`, `onOpenChange?(open: boolean)`. `DialogAction = { label; variant?; onClick?; closeOnClick?=true }`.
 - **Anatomy:** `Trigger` › `Portal` › `Backdrop` + `Popup` › `Title` + `Description` + body + footer + `Close`.
 - **Dimensions/tokens:** sizes `s`=400 / `m`=512 / `l`=640 px wide; popup `--radius-xl`, `padding: 24px`, `--elevation-l`; backdrop `rgba(0,0,0,.4)`. Primary action defaults to `filled`, secondary to `outlined`.
-- **Behavior:** actions close after `onClick` unless `closeOnClick: false`; corner close button optional.
+- **Behavior:** footer actions are anchored bottom-**left** (`justify-start`) with the primary CTA first/leftmost, then the secondary; actions close after `onClick` unless `closeOnClick: false`; corner close button optional.
 
 ### 4.31 AlertDialog
 
@@ -1514,7 +1514,7 @@ Compact confirmation modal for consequential actions. **Wraps:** Base UI `AlertD
 - **Exports:** `AlertDialog`; types `AlertDialogTone`, `AlertDialogProps`.
 - **Props:** `title`, `description?`, `trigger?: ReactElement`, `confirmLabel?='Confirm'`, `cancelLabel?='Cancel'`, `onConfirm?`, `onCancel?`, `tone?='default'` (`default | danger`), `open?`, `defaultOpen?`, `onOpenChange?`.
 - **Dimensions/tokens:** fixed `width: 400px`; `danger` confirm → `--border-negative-strong` bg + white text.
-- **Behavior:** both confirm and cancel are wrapped in `Close` (always dismiss via a choice); no corner close button.
+- **Behavior:** footer actions are anchored bottom-**left** (`justify-start`) with the confirm CTA first/leftmost, then cancel; both confirm and cancel are wrapped in `Close` (always dismiss via a choice); no corner close button.
 
 ### 4.32 Skeleton
 
