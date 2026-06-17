@@ -3,6 +3,13 @@ import '../src/styles/global.css'
 
 const preview: Preview = {
   parameters: {
+    options: {
+      // Pin the Overview welcome page first, then the conceptual groups.
+      storySort: {
+        order: ['Overview', 'Foundations', 'Components', 'Modules', '*'],
+      },
+    },
+
     controls: {
       matchers: {
        color: /(background|color)$/i,

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as Icons from '.'
 
 const meta = {
-  title: 'Foundation/Icons',
+  title: 'Foundations/Icons',
   parameters: { layout: 'padded' },
 } satisfies Meta
 

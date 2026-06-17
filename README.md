@@ -4,7 +4,7 @@
 
 **Live preview:** [demo app](https://ogcr-design-system.vercel.app/) · [component workbench (Storybook)](https://ogcr-design-system.vercel.app/storybook/)
 
-> Status: `0.1.0`, public — published to npm under public access (`publishConfig.access: public`). The publishable artifact is produced by `npm run build:lib`. `docs/design-system.md` is the authoritative written spec; when spec and code disagree, the spec wins.
+> Status: `1.0.0`, public — published to npm under public access (`publishConfig.access: public`). The publishable artifact is produced by `npm run build:lib`. `docs/design-system.md` is the authoritative written spec; when spec and code disagree, the spec wins.
 
 ## What's in here
 
@@ -29,7 +29,7 @@ import { Button } from '@majistudio/ogcr-design-system/Button'            // or 
 import '@majistudio/ogcr-design-system/styles.css'                        // tokens + Tailwind utilities + reset (import once)
 ```
 
-The barrel is ESM with `"sideEffects": ["*.css"]`, so a bundler (Vite/webpack/Rollup/esbuild) tree-shakes the components you don't import. Every component also has a `./<Name>` subpath (`@majistudio/ogcr-design-system/Button`) for explicit deep imports and non-bundler setups — the `exports` map and subpaths are generated from `src/components/*` by `scripts/generate-lib-meta.mjs` during `build:lib`. **The stylesheet does not split** — `styles.css` is one file (~53 KB) regardless of how many components you use; import it once.
+The barrel is ESM with `"sideEffects": ["*.css"]`, so a bundler (Vite/webpack/Rollup/esbuild) tree-shakes the components you don't import. Every component also has a `./<Name>` subpath (`@majistudio/ogcr-design-system/Button`) for explicit deep imports and non-bundler setups — the `exports` map and subpaths are generated from `src/components/*` by `scripts/generate-lib-meta.mjs` during `build:lib`. **The stylesheet does not split** — `styles.css` is one file (~59 KB) regardless of how many components you use; import it once.
 
 Machine-readable indexes ship in the package for tooling and LLM exploration: **`@majistudio/ogcr-design-system/manifest.json`** (structured: every component's import path, exported symbols, and types path) and **`@majistudio/ogcr-design-system/llms.txt`** (llms.txt format — one line per component with its import). Both are regenerated on every `build:lib`.
 
@@ -44,7 +44,7 @@ Peer dependencies the consumer provides: `react`/`react-dom` (^19), `@base-ui/re
 ## Local development
 
 - `npm run dev` — Vite dev server with HMR (the demo app in `src/App.tsx`)
-- `npm run storybook` — Storybook 9 (component workbench; `npm run build-storybook` for a static build)
+- `npm run storybook` — Storybook 10 (component workbench; `npm run build-storybook` for a static build)
 - `npm run test` — jsdom unit suite (Vitest)
 - `npm run test:a11y` — axe accessibility checks over every story in a headless Chromium (needs `npx playwright install chromium-headless-shell`)
 - `npm run lint` — ESLint over the repo
@@ -80,7 +80,7 @@ npm run build:lib && npm pack --dry-run
 
 - **React 19 + TypeScript + Vite**, **Tailwind v4** tokens, **Base UI** behavior primitives, **CVA + `cn()`** for variants.
 - **React Compiler is on** (`@rolldown/plugin-babel` + `reactCompilerPreset()`). Components auto-memoize at build time — skip manual `useMemo` / `useCallback` / `React.memo` unless the compiler can't (e.g. `Table`).
-- **Theming is Tailwind v4 `@theme inline`.** Extend the token layer in `src/styles/theme.css`; consume the semantic tokens (`bg-surface-*`, `text-text-*`, `shadow-focus-*`), not raw hex. There is no dark mode yet — see `CLAUDE.md` for the `@theme inline` mechanics that any dark-mode work must account for.
+- **Theming is Tailwind v4 `@theme inline` over a runtime `--ds-*` seam.** Extend the token layer in `src/styles/theme.css`; consume the semantic tokens (`bg-surface-*`, `text-text-*`, `shadow-focus-*`), not raw hex. Every brand color resolves through a `--ds-*` custom property in `src/styles/palette.css`, so the utilities and focus shadows are **runtime-themeable** — override a `--ds-*` on any scoping element and everything derived from it retints with no rebuild (see the **Foundations → Theming** story, and `npm run check:tokens` which fails the build if a color utility re-bakes a literal). There is **no dark mode shipped yet** — the color layer is in place, so a dark theme is a `.dark` palette override rather than a rearchitecture. See `CLAUDE.md` for the `@theme inline` mechanics.
 - **TypeScript project references**: `tsconfig.json` delegates to `tsconfig.app.json` and `tsconfig.node.json`; `tsc -b` must pass for both.
 - **ESLint flat config** in `eslint.config.js`; `dist/` is globally ignored.
 

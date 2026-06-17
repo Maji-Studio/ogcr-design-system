@@ -1203,7 +1203,7 @@ Behavior:
 - Required indicator: the `*` is `aria-hidden`; pair with `required` on the underlying input for assistive tech.
 - Footer: left-side action stack (primary CTA first / leftmost), right-side mono note (e.g. "Required fields are marked *"). CTAs are anchored bottom-**left**, not bottom-right. Stacks on narrow widths.
 
-### 4.14 DataTable
+### 4.14 Table
 
 Sortable, accessible table built on [`@tanstack/react-table`](https://tanstack.com/table) v8. Visual treatment matches the kv-row pattern: dashed row rules, mono-caps headers, tabular-nums on numeric cells, Pill-rendered status cells.
 
