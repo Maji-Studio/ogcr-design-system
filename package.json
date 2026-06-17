@@ -226,9 +226,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:lib": "vite build --config vite.lib.config.ts && rm -f dist/styles.js dist/styles.js.map && node scripts/generate-lib-meta.mjs && node scripts/inject-use-client.mjs && npm run check:merge && npm run check:tokens && npm run check:dist",
+    "build:lib": "vite build --config vite.lib.config.ts && rm -f dist/styles.js dist/styles.js.map && node scripts/generate-lib-meta.mjs && node scripts/inject-use-client.mjs && npm run check:merge && npm run check:spacing && npm run check:tokens && npm run check:dist",
     "prepublishOnly": "npm run build:lib",
     "check:merge": "node scripts/check-merge-config.mjs",
+    "check:spacing": "node scripts/check-spacing-scale.mjs",
     "check:tokens": "node scripts/check-token-seam.mjs",
     "check:dist": "node scripts/check-dist.mjs",
     "lint": "eslint .",
